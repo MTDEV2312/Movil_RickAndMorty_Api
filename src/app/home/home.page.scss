@@ -75,8 +75,8 @@
 
 // Estilos para la lista de personajes y las tarjetas
 .character-list {
-  padding-left: var(--ion-safe-area-left, 12px);
-  padding-right: var(--ion-safe-area-right, 12px);
+  // padding-left: var(--ion-safe-area-left, 0px); // Eliminado
+  // padding-right: var(--ion-safe-area-right, 0px); // Eliminado
   padding-bottom: 16px; // Espacio al final de la lista
   background: transparent;
 }
