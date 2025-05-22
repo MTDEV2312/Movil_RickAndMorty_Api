@@ -25,3 +25,129 @@
 #container a {
   text-decoration: none;
 }
+
+
+
+// Toolbar de búsqueda
+.searchbar-toolbar {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px; // Espacio debajo de la barra de búsqueda
+  --background: var(--ion-color-light); // Fondo para la toolbar de búsqueda
+}
+
+.custom-searchbar {
+  --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  --border-radius: 20px;
+  padding: 0; // Eliminar padding interno si es necesario
+}
+
+
+// Mensajes de estado (carga, error, vacío)
+.status-message {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px; // Para que no salte tanto la UI
+
+  .status-icon {
+    font-size: 3em; // Icono más grande
+    margin-bottom: 10px;
+    color: var(--ion-color-medium-shade);
+  }
+
+  p {
+    font-size: 1.1em;
+    color: var(--ion-color-medium-shade);
+    margin-top: 0;
+  }
+
+  ion-spinner {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+  }
+}
+
+
+// Estilos para la lista de personajes y las tarjetas
+.character-list {
+  padding-left: var(--ion-safe-area-left, 12px);
+  padding-right: var(--ion-safe-area-right, 12px);
+  padding-bottom: 16px; // Espacio al final de la lista
+  background: transparent;
+}
+
+.character-card {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 20px; // Espacio entre tarjetas
+  width: 100%;
+  border-radius: 12px; // Bordes más redondeados
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12); // Sombra más pronunciada
+
+  .character-card-image {
+    width: 100%;
+    height: 250px; // Altura fija para la imagen
+    object-fit: cover;
+    display: block;
+    border-top-left-radius: 12px; // Redondear esquinas superiores de la imagen
+    border-top-right-radius: 12px;
+  }
+
+  ion-card-header {
+    padding-top: 12px;
+    padding-bottom: 8px;
+    // background-color: var(--ion-color-step-100, #f8f8f8); // Un fondo sutil para el header de la tarjeta
+  }
+
+  .character-card-title {
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: var(--ion-color-dark-shade);
+  }
+
+  ion-card-subtitle {
+    font-size: 0.9rem;
+    color: var(--ion-color-medium-shade);
+    margin-top: 4px;
+  }
+
+  ion-card-content {
+    padding-top: 10px;
+    padding-bottom: 12px;
+    font-size: 1rem;
+    background-color: var(--ion-color-step-50, #ffffff); // Fondo para el contenido de la tarjeta
+    border-bottom-left-radius: 12px; // Redondear esquinas inferiores
+    border-bottom-right-radius: 12px;
+    p {
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// Estilos para el estado del personaje
+.status-alive {
+  color: var(--ion-color-success-shade);
+  font-weight: 500;
+}
+.status-dead {
+  color: var(--ion-color-danger-shade);
+  font-weight: 500;
+}
+.status-unknown {
+  color: var(--ion-color-warning-shade);
+  font-weight: 500;
+}
+
+// Ajuste para la última tarjeta en la lista
+.character-list .character-card:last-child {
+ margin-bottom: 8px;
+}
