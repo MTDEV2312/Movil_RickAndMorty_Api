@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Rick and Morty Characters
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Characters</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-toolbar>
+    <ion-searchbar
+      [value]="searchTerm"
+      (ionInput)="handleSearchInput($event)"
+      (ionClear)="clearSearchAndReload()"
+      placeholder="Search by name"
+      debounce="500">
+    </ion-searchbar>
+  </ion-toolbar>
+  <!-- Indicador de carga inicial o cuando se está buscando y no hay resultados aún -->
+  <div *ngIf="loading && characters.length === 0" style="text-align: center; padding: 20px;">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading characters...</p>
+  </div>
+
+  <!-- Mensaje de error si la búsqueda no arrojó resultados o hubo un error general -->
+  <div *ngIf="searchError && characters.length === 0" style="text-align: center; color: var(--ion-color-danger); padding: 20px;">
+    <p>{{ searchError }}</p>
+  </div>
+
+  <!-- Mensaje si no hay personajes y no se está cargando ni hay error (ej. búsqueda vacía que no devuelve nada) -->
+   <div *ngIf="!loading && !searchError && characters.length === 0 && searchTerm.trim() !== ''" style="text-align: center; padding: 20px;">
+    <p>No characters match your search for "{{ searchTerm }}".</p>
+  </div>
+
+   <div *ngIf="!loading && !searchError && characters.length === 0 && !searchTerm.trim() && !loading" style="text-align: center; padding: 20px;">
+    <!-- Este mensaje podría aparecer brevemente antes de la carga inicial si la API es lenta,
+         o si la API realmente no devuelve nada en la primera carga sin filtros. -->
+    <p>No characters to display. Try a search or pull down to refresh if applicable.</p>
+  </div>
+
+  <ion-list *ngIf="characters.length > 0">
+    <ion-item *ngFor="let character of characters" (click)="viewCharacterDetails(character.id)" [button]="true" [detail]="true">
+      <ion-avatar slot="start">
+        <img [src]="character.image" [alt]="character.name">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ character.name }}</h2>
+        <p>Status: {{ character.status }}</p>
+        <p>Species: {{ character.species }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreCharacters($event)" [disabled]="infiniteScroll?.disabled">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more characters...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

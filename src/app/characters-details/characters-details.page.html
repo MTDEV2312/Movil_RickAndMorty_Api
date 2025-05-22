@@ -1,0 +1,133 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-wrap">{{ character ? character.name : 'Character Details' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding"> <!-- Añadido ion-padding para un espaciado general -->
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large" class="ion-text-wrap">{{ character ? character.name : 'Details' }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="isLoading" class="ion-text-center ion-padding-vertical"> <!-- Ajustado padding -->
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p class="ion-padding-top">Loading character details...</p>
+  </div>
+
+  <div *ngIf="error && !isLoading" class="ion-text-center ion-padding">
+    <ion-icon name="sad-outline" size="large" color="danger" class="ion-margin-bottom"></ion-icon>
+    <p style="color: var(--ion-color-danger);">{{ error }}</p>
+    <ion-button *ngIf="characterId" (click)="loadCharacterDetails(characterId)" fill="outline" color="medium" class="ion-margin-top">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Retry
+    </ion-button>
+  </div>
+
+  <div *ngIf="character && !isLoading && !error">
+    <ion-card>
+      <!-- Imagen del personaje -->
+      <ion-img 
+        [src]="character.image" 
+        [alt]="character.name" 
+        class="character-image" 
+        style="width: 100%; max-height: 350px; object-fit: cover; display: block; border-bottom: 1px solid var(--ion-color-step-150, #e0e0e0);">
+      </ion-img>
+
+      <ion-card-header class="ion-text-center ion-padding-top">
+        <ion-card-title color="primary" class="ion-text-wrap">{{ character.name }}</ion-card-title>
+        <ion-card-subtitle class="ion-text-wrap ion-padding-top-small">
+          <ion-icon [name]="getStatusIcon(character.status)" [color]="getStatusColor(character.status)" style="vertical-align: middle; font-size: 1.1em; margin-right: 4px;"></ion-icon>
+          {{ character.status }} - {{ character.species }}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content class="ion-padding-top">
+        <ion-list-header>
+          <ion-label color="medium"><strong>General Information</strong></ion-label>
+        </ion-list-header>
+        <ion-list lines="inset"> <!-- Usar "inset" o "full" para líneas visibles entre items -->
+          <ion-item>
+            <ion-icon name="male-female-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>Gender</ion-label>
+            <ion-note slot="end" class="ion-text-wrap">{{ character.gender || 'N/A' }}</ion-note>
+          </ion-item>
+
+          <ion-item *ngIf="character.type">
+            <ion-icon name="body-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>Type</ion-label>
+            <ion-note slot="end" class="ion-text-wrap">{{ character.type }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="planet-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>Origin</ion-label>
+            <ion-note slot="end" class="ion-text-wrap">{{ character.origin?.name || 'Unknown' }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="location-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>Last Known Location</ion-label>
+            <ion-note slot="end" class="ion-text-wrap">{{ character.location?.name || 'Unknown' }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="calendar-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>First Seen</ion-label>
+            <ion-note slot="end" class="ion-text-wrap">{{ character.created | date:'longDate' }}</ion-note>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Sección de Episodios -->
+    <div *ngIf="character.episode?.length > 0" class="ion-margin-top">
+      <ion-list-header>
+        <ion-label color="primary"><strong>Episode Appearances ({{character.episode.length}})</strong></ion-label>
+      </ion-list-header>
+      <ion-list lines="inset">
+        <ion-item *ngFor="let episodeUrl of character.episode.slice(0, 10)">
+          <ion-icon name="film-outline" slot="start" color="tertiary"></ion-icon>
+          <ion-label class="ion-text-wrap">Episode {{ episodeUrl.split('/').pop() }}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="character.episode?.length > 10" lines="none">
+          <ion-label class="ion-text-center ion-padding-vertical-small" style="width: 100%;">
+            ...and {{ character.episode.length - 10 }} more.
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Sección de Comentarios -->
+    <ion-card class="ion-margin-top">
+      <ion-card-header>
+        <ion-card-title color="secondary">Add a Comment</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="full">
+          <ion-textarea
+            [(ngModel)]="userComment"
+            placeholder="Enter your comment here..."
+            [autoGrow]="true"
+            rows="3"
+            maxlength="500"
+            style="border: 1px solid var(--ion-color-medium-shade); border-radius: 5px; padding: 8px;"
+          ></ion-textarea>
+        </ion-item>
+        <ion-button
+          expand="block"
+          (click)="saveCharacterWithComment()"
+          [disabled]="!character || savingComment"
+          class="ion-margin-top">
+          <ion-spinner *ngIf="savingComment" name="crescent" slot="start"></ion-spinner>
+          {{ savingComment ? 'Saving...' : 'Save Character' }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>
