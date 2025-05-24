@@ -92,19 +92,22 @@ Aplicación móvil desarrollada con Ionic y Angular para explorar personajes del
 ## Capturas de Pantalla
 
 ### Página de Inicio
-![WhatsApp Image 2025-05-22 at 15 46 04 (1)](https://github.com/user-attachments/assets/968dba98-1009-4933-88c1-3fb162b4554f)
+![Captura de pantalla 2025-05-24 144648](https://github.com/user-attachments/assets/0be9af3e-6da2-4ed7-ac7a-4ba134b8dc0c)
 
 ### Búsqueda de Personajes
-![busqueda](https://github.com/user-attachments/assets/3247f872-87c0-4a5c-9f86-3eaf8cdd1c8a)
+
+![Captura de pantalla 2025-05-24 144725](https://github.com/user-attachments/assets/21a1744a-bab4-417f-af14-27d5c19fdf4b)
 
 
 ### Detalles del Personaje
 <!-- Aquí puedes añadir una imagen de la página de detalles -->
-![WhatsApp Image 2025-05-22 at 15 46 04](https://github.com/user-attachments/assets/c807571e-236c-4f10-82ba-325ae1a265be)
+![Captura de pantalla 2025-05-24 144748](https://github.com/user-attachments/assets/0761f07f-f990-417c-8907-1bdb96889a3e)
+
 
 ### Añadir Comentario
 <!-- Aquí puedes añadir una imagen del proceso de añadir un comentario -->
-![comentario](https://github.com/user-attachments/assets/1c03cafc-22b4-4eb7-8f69-c5d36368fdcd)
+
+![Captura de pantalla 2025-05-24 144758](https://github.com/user-attachments/assets/999c28e8-4f79-496d-bc63-4b1a7a8350ab)
 
 ## Estructura del Proyecto
 
